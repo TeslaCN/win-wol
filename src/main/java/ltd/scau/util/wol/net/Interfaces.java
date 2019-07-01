@@ -43,6 +43,8 @@ public class Interfaces {
 
     public static final Pattern MAC_PATTERN = Pattern.compile(".*([0-9A-Fa-f]{2}(?:[-:][0-9A-Fa-f]{2}){5}).*");
 
+    public static final String MAC_SPLIT_REGEX = "[:-]";
+
     /**
      * 扫描局域网中所有MAC地址
      *
@@ -65,7 +67,7 @@ public class Interfaces {
                 .filter(Matcher::find)
                 .map(m -> m.group(1))
                 .map(a -> {
-                    String[] splitAddress = a.split("-");
+                    String[] splitAddress = a.split(MAC_SPLIT_REGEX);
                     byte[] addr = new byte[6];
                     for (int i = 0; i < splitAddress.length; i++) {
                         addr[i] = Integer.valueOf(splitAddress[i], 16).byteValue();
